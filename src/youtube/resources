@@ -1,0 +1,7 @@
+https://stackoverflow.com/questions/23107799/how-do-i-get-the-list-of-all-videos-from-youtube-using-gdata-python-library
+https://stackoverflow.com/questions/13593769/retrieve-youtube-channel-info-for-vanity-channel/13595550#13595550
+https://stackoverflow.com/questions/17402601/youtube-how-to-get-a-list-of-videos-in-youtube-channel-and-display-them-as-a-l
+https://stackoverflow.com/questions/50954585/how-list-all-videos-from-a-youtube-channel
+https://github.com/Tyrrrz/YoutubeExplode
+https://developers.google.com/youtube/v3/docs/videos/list?apix_params=%7B%22part%22%3A%22snippet%2CcontentDetails%2Cstatistics%22%2C%22chart%22%3A%22mostPopular%22%2C%22regionCode%22%3A%22US%22%7D#usage
+https://developers.google.com/youtube/v3/docs/channels
