@@ -1,4 +1,5 @@
 import json
+import time
 import urllib.request
 from collections import namedtuple
 
@@ -28,25 +29,33 @@ def find_load_more_url(page):
 
 
 def download_page(url):
-    print("Downloading {0}".format(url))
     return urllib.request.urlopen(url).read()
+
+
+PARSER = "html.parser"
 
 
 def get_videos(username):
     page_url = "http://www.youtube.com/user/{0}/videos".format(username)
-    page = BeautifulSoup(download_page(page_url))
+    page = BeautifulSoup(download_page(page_url), PARSER)
     videos = parse_videos_page(page)
     page_url = find_load_more_url(page)
     while page_url:
         json_data = json.loads(download_page(page_url))
-        page = BeautifulSoup(json_data.get("content_html", ""))
+        page = BeautifulSoup(json_data.get("content_html", ""), PARSER)
         videos.extend(parse_videos_page(page))
-        page_url = find_load_more_url(BeautifulSoup(json_data.get("load_more_widget_html", "")))
+        load_more_widget_html = json_data.get("load_more_widget_html", "")
+        soup = BeautifulSoup(load_more_widget_html, PARSER)
+        page_url = find_load_more_url(soup)
     return videos
 
 
 if __name__ == "__main__":
+    start = time.time()
     videos = get_videos("jimmydiresta")
+    duration = time.time() - start
     for video in videos:
         print(video)
-    print("{0} videos".format(len(videos)))
+    print("duration {0} for {1} videos, {2}s per video".format(duration, len(videos), (duration)/len(videos)))
+    # duration 4.682564973831177 for 30 videos, 0.1560854991277059s per video
+    # ~ 2 day for 1e6 videos
