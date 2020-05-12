@@ -6,7 +6,7 @@ import google_auth_oauthlib.flow
 import googleapiclient.discovery
 import googleapiclient.errors
 
-from youtube.utils import get_client_secrets_file
+from utils.credentials import get_client_secrets_file
 
 scopes = ["https://www.googleapis.com/auth/youtube.readonly"]
 
