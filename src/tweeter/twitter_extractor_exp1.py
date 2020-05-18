@@ -14,4 +14,4 @@ def twitter_py_lib(q='Quibi', result_type='recent', c=1, start_date='2019-01-01'
         for a in attrs:
             print(f'{a}: {getattr(r, a)}')
 
-# twitter_py_lib()
+twitter_py_lib()
