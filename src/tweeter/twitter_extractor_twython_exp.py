@@ -1,64 +1,59 @@
 import json
 import re
-from time import time
+import time
+from pprint import pprint
 
 from twython import Twython, TwythonStreamer
 
 from utils.credentials import get_tweeter_credentials
 
-p = re.compile(r'max_id=(?P<max_id>\d+)&')
+MAX_ID_PATTERN = re.compile(r'max_id=(?P<max_id>\d+)&')
 
-credentials = get_tweeter_credentials()
+CREDENTIALS = get_tweeter_credentials()
 
 
-# dict_keys(['statuses', 'search_metadata'])
-# print(search['search_metadata'])
-# {
-# 'completed_in': 0.083,
-# 'max_id': 1261552126016266250,
-# 'max_id_str': '1261552126016266250',
-# 'next_results': '?max_id=1261549058222505984&q=%22data%20science%22&include_entities=1',
-# 'query': '%22data+science%22',
-# 'refresh_url': '?since_id=1261552126016266250&q=%22data%20science%22&include_entities=1',
-# 'count': 15,
-# 'since_id': 0,
-# 'since_id_str': '0'
-# }
-def search_latest_7_day(q='"data science"'):
-    s = time()
-    result = list(search_generator(q))
-    print(time() - s)
-    result = sum(result, [])
-    with open('out_1.txt', 'w') as f:
-        for r in result:
+def search_latest_7_day(q, save_to=None, max_results=500, total=None):
+    all_results = (e for result in search_generator(q, max_results, total) for e in result)
+    if save_to:
+        write_to_file(all_results, save_to)
+    else:
+        pprint(list(all_results))
+
+
+def write_to_file(rows, save_to):
+    with open(save_to, 'w') as f:
+        for r in rows:
             f.write(json.dumps(r) + '\n')
 
 
-def search_generator(q):
-    t = Twython(credentials['consumer_key'], credentials['consumer_secret'])
-    max_results = 500
-    search = t.search(q=q, count=max_results)  # recent 1 week
-    yield search['statuses']
-    i = 0
-    next_results = search['search_metadata'].get('next_results')
-    while next_results:
-        i += 1
-        print(i)
+def search_generator(q, max_results=500, total=None):
+    t = Twython(CREDENTIALS['consumer_key'], CREDENTIALS['consumer_secret'])
+    search = dict()
+    collected = 0
+    error_time = 0
+    while (total is None or collected < total) and error_time < 5:
         try:
-            search = t.search(q=q, max_id=get_max_id(next_results), count=max_results)  # recent 1 week
-        except:
-            t = Twython(credentials['consumer_key'], credentials['consumer_secret'])
-            print(f'reconnect on {i}')
+            max_id = get_max_id(search.get('search_metadata'))
+            search = t.search(q=q, max_id=max_id, count=max_results)
+        except Exception as e:
+            error_time += 1
+            print(e)
+            time.sleep(30 * error_time)
+            t = Twython(CREDENTIALS['consumer_key'], CREDENTIALS['consumer_secret'])
             continue
         yield search['statuses']
-        next_results = search['search_metadata'].get('next_results')
+        collected += len(search['statuses'])
+        if not search['search_metadata'].get('next_results'):
+            return
 
 
-def get_max_id(r):
-    return p.search(r)['max_id']
-
-
-search_latest_7_day('#Quibi')
+def get_max_id(search_metadata):
+    if not search_metadata:
+        return
+    next_results = search_metadata.get('next_results')
+    if not next_results:
+        return
+    return MAX_ID_PATTERN.search(next_results)['max_id']
 
 
 class TStreamer(TwythonStreamer):
@@ -78,13 +73,17 @@ class TStreamer(TwythonStreamer):
         print(status_code, data)
         self.disconnect()
 
-# stream = TStreamer(
-#     credentials['consumer_key'],
-#     credentials['consumer_secret'],
-#     credentials['access_token_key'],
-#     credentials['access_token_secret']
-# )
-# stream.statuses.filter(track='#Quibi', since="2020-01-01")
-# print(stream.tweets)
-# If all public
-# stream.statuses.sample()
+
+if __name__ == '__main__':
+    # search_latest_7_day('#Quibi', save_to='out.json')
+    search_latest_7_day('#Quibi', max_results=5, total=5)
+    # stream = TStreamer(
+    #     credentials['consumer_key'],
+    #     credentials['consumer_secret'],
+    #     credentials['access_token_key'],
+    #     credentials['access_token_secret']
+    # )
+    # stream.statuses.filter(track='#Quibi', since="2020-01-01")
+    # print(stream.tweets)
+    # If all public
+    # stream.statuses.sample()
