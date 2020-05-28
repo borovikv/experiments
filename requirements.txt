@@ -4,3 +4,7 @@ google-auth-httplib2
 beautifulsoup4
 python-twitter
 twython
+tweepy
+pandas
+textblob
+preprocessor
