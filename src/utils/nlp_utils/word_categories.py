@@ -1,10 +1,14 @@
 import re
+import json
+
+from src.utils.env_utils import get_path_to_project_file
 
 
 def get_stop_words():
-    # todo: Jay implementing
-    pass
-
+    with open(get_path_to_project_file('src/utils/nlp_utils/stop_words.json')) as f:
+        file = f.read()
+        file_dict = json.loads(file)
+        return file_dict['words']
 
 # HappyEmoticons
 emoticons_happy = {

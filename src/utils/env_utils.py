@@ -9,4 +9,8 @@ def base_dir():
 
 
 def get_path_to_the_data_dir(name):
-    return os.path.join(base_dir(), 'data', name)
+    return get_path_to_project_file('data', name)
+
+
+def get_path_to_project_file(*path):
+    return os.path.join(base_dir(), *path)

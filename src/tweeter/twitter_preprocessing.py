@@ -4,6 +4,7 @@ import string
 import tweepy
 from textblob import TextBlob
 
+from tweeter.twitter_extractor_twython_exp import TStreamer
 from utils.collection_utils import write_to_csv
 from utils.credentials import get_tweeter_credentials
 from utils.env_utils import get_path_to_the_data_dir
@@ -27,12 +28,20 @@ COLS = ['id', 'created_at', 'source', 'original_text', 'clean_text', 'sentiment'
 def collect_tweets(api, keyword, file):
     # If the file exists, then read the existing data from the CSV file.
     result = []
-    for page in tweepy.Cursor(api.search, q=keyword, count=200, include_rts=False):
-        for status in page:
-            status = status._json
-            if status['lang'] != 'en':
-                continue
-            result.append(process_status(status))
+    credentials = get_tweeter_credentials()
+    stream = TStreamer(
+        credentials['consumer_key'],
+        credentials['consumer_secret'],
+        credentials['access_token_key'],
+        credentials['access_token_secret']
+    )
+    stream.statuses.filter(track=keyword)
+    print(stream.tweets)
+
+    for status in stream.tweets:
+        if status['lang'] != 'en':
+            continue
+        result.append(process_status(status))
 
     write_to_csv([COLS] + result, get_path_to_the_data_dir(file))
 
@@ -91,6 +100,6 @@ def get_coordinates(status):
 
 
 if __name__ == '__main__':
-    telemedicine_keywords = '#telemedicine OR #telehealth OR   #digitalhealth OR #ehealth OR #digitalpatient OR #digitaltransformation'
+    telemedicine_keywords = '#COVID19'
     api = get_tweeter_api()
-    collect_tweets(api, telemedicine_keywords, 'telemedicine_tweets.csv')
+    collect_tweets(api, telemedicine_keywords, 'COVID19.csv')
