@@ -36,4 +36,4 @@ def file_name_from_keywords(q: str):
 
 if __name__ == '__main__':
     csv_extractor('#QUIBI', extractor.search_latest_7_day)
-    csv_extractor('#QUIBI', extractor.stream_extractor)
+    # csv_extractor('#QUIBI', extractor.stream_extractor)
