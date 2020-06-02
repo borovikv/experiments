@@ -14,4 +14,7 @@ def get_tweeter_credentials():
     path = os.path.join(base_dir(), 'credentials/tweeter_credentials.json')
     with open(path) as f:
         s = f.read()
-        return json.loads(s)
+        credentials = json.loads(s)
+    credentials_file_keys = ['consumer_key', 'consumer_secret', 'access_token_key', 'access_token_secret']
+    twython_keys = ['app_key', 'app_secret', 'oauth_token', 'oauth_token_secret']
+    return {tk: credentials[ck] for tk, ck in zip(twython_keys, credentials_file_keys)}
