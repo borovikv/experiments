@@ -1,5 +1,5 @@
-import re
 import json
+import re
 
 from src.utils.env_utils import get_path_to_project_file
 
@@ -9,6 +9,7 @@ def get_stop_words():
         file = f.read()
         file_dict = json.loads(file)
         return file_dict['words']
+
 
 # HappyEmoticons
 emoticons_happy = {
@@ -37,8 +38,3 @@ emoji_pattern = re.compile("["
                            u"\U00002702-\U000027B0"
                            u"\U000024C2-\U0001F251"
                            "]+", flags=re.UNICODE)
-
-def word_tokenize(text: str):
-    return text.split()
-
-

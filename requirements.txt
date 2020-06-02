@@ -1,4 +1,4 @@
-google-api-python-client
+google-api-python-client==1.8.4
 google-auth-oauthlib
 google-auth-httplib2
 beautifulsoup4
@@ -8,3 +8,4 @@ tweepy
 pandas
 textblob
 preprocessor
+pytest

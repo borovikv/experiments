@@ -5,3 +5,4 @@
 /credentials/google_credentials
 /venv
 /data
+__pycache__
