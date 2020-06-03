@@ -34,7 +34,8 @@ def process_status(status):
 
 def clean_text(tweet: str):
     words = re.split(r'[^a-z0-9_]', tweet.lower())
-    return ' '.join([w for w in words if len(w) > 1 and w not in get_stop_words()])
+    stop_words = get_stop_words()
+    return ' '.join([w for w in words if len(w) > 1 and w not in stop_words])
 
 
 def get_hashtags(status):
