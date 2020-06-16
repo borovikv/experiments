@@ -33,8 +33,10 @@ def search_generator(credentials, q, max_results=500, total=None):
             search = t.search(q=q, max_id=max_id, count=max_results)
         except Exception as e:
             error_time += 1
-            print(e)
-            time.sleep(30 * error_time)
+            print(q, e)
+            time.sleep(60 * 16)  # wait 16 min.
+            # From the doc: There are two initial buckets available for GET requests:
+            # 15 calls every 15 minutes, and 180 calls every 15 minutes.
             t = Twython(**credentials)
             continue
         yield search['statuses']
