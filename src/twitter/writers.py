@@ -69,6 +69,9 @@ if __name__ == '__main__':
     # tuesday: 12:42
     queries = [
         '#Evernote',
+        '#peloton',
+        '#pton',
+        '@onepeloton'
         # '#GeorgeFloydprotest',
         # '#GeorgeFloydMurder',
         # '#GeorgeFloydProtests',

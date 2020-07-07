@@ -10,3 +10,5 @@ textblob
 preprocessor
 pytest
 ipython
+sklearn
+mglearn
