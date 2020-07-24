@@ -68,10 +68,10 @@ if __name__ == '__main__':
     # print(get_version())
     # tuesday: 12:42
     queries = [
-        '#Evernote',
-        '#peloton',
-        '#pton',
-        '@onepeloton'
+        # '#Evernote',
+        # '#peloton',
+        # '#pton',
+        # '@onepeloton'
         # '#GeorgeFloydprotest',
         # '#GeorgeFloydMurder',
         # '#GeorgeFloydProtests',

@@ -162,19 +162,4 @@ def draw_bar_plot(topic_names, weights, columns=1):
 # twits_bag_of_words('evernote_20200620_195530.json')
 # classify_twits('evernote_20200620_195530.json')
 # twits_bag_of_words('evernote_20200620_195530.json')
-direhly_lda_extrac_topic_names(list(get_text('evernote_20200620_195530.json')))
-'''
-Как это часто бывает в машинном обучении, представление данных играет ключевую роль в прикладных задачах NLP, 
-а исследование извлекаемых токенов и n-грамм позволяет глубже понять суть процесса моделирования.
-books:
-https://www.oreilly.com/library/view/natural-language-processing/9780596803346/
-https://nlp.stanford.edu/IR-book/
-
-Чтобы воспользоваться более продвинутыми методами обработки текста, 
-мы рекомендуем питоновские пакеты
-- spacy (относительно новый, но очень эффективный и хорошо разработанный пакет), 
-- nltk (очень хорошо отлаженная библиотека, хотя и несколько устаревшая)
-- gensim (пакет, предназначенный для NLP, с упором на моделирование тем).
-recurrent neural networks, RNN (TensorFlow)
-https://www.tensorflow.org/tutorials
-'''
+# direhly_lda_extrac_topic_names(list(get_text('onepeloton_20200705_154118.json')))
