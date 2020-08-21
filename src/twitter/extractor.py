@@ -30,7 +30,7 @@ def search_generator(credentials, q, max_results=500, total=None):
     while (total is None or collected < total) and error_time < 5:
         try:
             max_id = get_max_id(search.get('search_metadata'))
-            search = t.search(q=q, max_id=max_id, count=max_results)
+            search = t.search(q=q, max_id=max_id, count=max_results, lang='en')
         except Exception as e:
             error_time += 1
             print(q, e)

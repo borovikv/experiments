@@ -121,6 +121,7 @@ def direhly_lda_extrac_topic_names(text_train):
 
 
 def print_topic_documents(text, document_topics, n_topics, printed_documents=5):
+    a = 1
     for i in range(n_topics):
         print('*' * 100)
         print(f'topic {i}')
@@ -162,4 +163,4 @@ def draw_bar_plot(topic_names, weights, columns=1):
 # twits_bag_of_words('evernote_20200620_195530.json')
 # classify_twits('evernote_20200620_195530.json')
 # twits_bag_of_words('evernote_20200620_195530.json')
-# direhly_lda_extrac_topic_names(list(get_text('onepeloton_20200705_154118.json')))
+direhly_lda_extrac_topic_names(list(get_text('sonya7siii_20200812_184311.json')))

@@ -1,6 +1,6 @@
 import re
 
-from textblob import TextBlob
+# from textblob import TextBlob
 
 from utils.nlp_utils.word_categories import get_stop_words
 

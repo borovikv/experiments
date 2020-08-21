@@ -77,6 +77,8 @@ if __name__ == '__main__':
         # '#GeorgeFloydProtests',
         # '#GeorgeFloydProtesters',
         # '#crunchyroll'
+        'sony a7s iii',
+        # 'canon r5'
     ]
     for s in queries:
         # csv_extractor(s, extractor.search_latest_7_day)
